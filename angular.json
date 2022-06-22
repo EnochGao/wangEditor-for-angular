@@ -11,6 +11,9 @@
         },
         "@schematics/angular:application": {
           "strict": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
         }
       },
       "root": "",
@@ -107,6 +110,16 @@
       }
     },
     "@wangeditor/editor-for-angular": {
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "less",
+          "skipTests": true,
+          "changeDetection": "OnPush"
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
+        }
+      },
       "projectType": "library",
       "root": "projects/wangeditor/editor-for-angular",
       "sourceRoot": "projects/wangeditor/editor-for-angular/src",

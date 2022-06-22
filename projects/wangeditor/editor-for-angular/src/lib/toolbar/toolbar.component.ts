@@ -1,10 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IEditorConfig } from '@wangeditor/editor';
 
 @Component({
-  selector: 'lib-toolbar',
+  selector: 'wang-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.css']
+  styleUrls: ['./toolbar.component.less']
 })
 export class ToolbarComponent implements OnInit {
 
