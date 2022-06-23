@@ -9,6 +9,7 @@
     "update:file": "npx cpr README.md dist/wangeditor/editor-for-angular/README.md -o && npx cpr README-en.md dist/wangeditor/editor-for-angular/README-en.md -o",
     "test": "ng test"
   },
+  "private": "false",
   "dependencies": {
     "@angular/animations": "^14.0.0",
     "@angular/common": "^14.0.0",
