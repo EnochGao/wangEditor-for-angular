@@ -1,6 +1,24 @@
 {
   "name": "@wangeditor/editor-for-angular",
   "version": "0.0.1",
+  "keywords": [
+    "富文本",
+    "富文本编辑器",
+    "Angular",
+    "wangEditor",
+    "ng wangEditor"
+  ],
+  "description": "wangEditor for angular.",
+  "author": {
+    "name": "EnochGao",
+    "email": "enochgao@qq.com"
+  },
+  "homepage": "https://enochgao.github.io/wangEditor-for-angular/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EnochGao/wangEditor-for-angular"
+  },
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^14.0.0",
     "@angular/core": "^14.0.0",
