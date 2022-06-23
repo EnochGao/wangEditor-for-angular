@@ -44,6 +44,7 @@
               "aot": true,
               "buildOptimizer": true,
               "optimization": true,
+              "baseHref": "/wangEditor-for-angular/",
               "budgets": [
                 {
                   "type": "initial",
