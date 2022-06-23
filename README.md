@@ -10,7 +10,7 @@
 
 ```shell
 yarn add @wangeditor/editor
-yarn add @wangeditor/editor-for-angular@next
+yarn add editor-for-angular
 ```
 
 ## 样式引入
@@ -27,7 +27,7 @@ angular.json
 ## 使用
 
 ```ts
-  import { EditorForAngularModule } from '@wangeditor/editor-for-angular';
+  import { EditorForAngularModule } from 'wangeditor-for-angular';
 ```
 
 ```html

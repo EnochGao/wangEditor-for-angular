@@ -11,7 +11,7 @@ based on the [wangEditor 5](https://www.wangeditor.com/v5/for-frame.html#vue3)
 
 ```shell
 yarn add @wangeditor/editor
-yarn add @wangeditor/editor-for-angular@next
+yarn add editor-for-angular
 ```
 
 ## style
@@ -29,7 +29,7 @@ angular.json
 
 
 ```ts
-  import { EditorForAngularModule } from '@wangeditor/editor-for-angular';
+  import { EditorForAngularModule } from 'wangeditor-for-angular';
 ```
 
 ```html

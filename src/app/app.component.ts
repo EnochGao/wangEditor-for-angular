@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IDomEditor } from '@wangeditor/editor';
-import { AlertType, Mode } from '@wangeditor/editor-for-angular';
+import { AlertType, Mode } from 'wangeditor-for-angular';
 
 @Component({
   selector: 'app-root',
