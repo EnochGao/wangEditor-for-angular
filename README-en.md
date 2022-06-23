@@ -1,11 +1,38 @@
-<div>
-  <button (click)="insertText()">insert text</button>
-  <button (click)="printHtml()">print html</button>
-  <button (click)="disable()">
-    {{ disabled ? 'enable': 'disable'  }}
-  </button>
+# wangEditor for angular
 
-  <div style="border: 1px solid #ccc; margin-top: 10px">
+[中文文档](./README.md)
+
+## Introduction
+
+An out-of-the-box angular component
+based on the [wangEditor 5](https://www.wangeditor.com/v5/for-frame.html#vue3)
+
+## Installation
+
+```shell
+yarn add @wangeditor/editor
+yarn add @wangeditor/editor-for-angular@next
+```
+
+## style
+
+angular.json
+
+```json
+    "styles": [
+      "src/styles.less",
+      "node_modules/@wangeditor/editor/dist/css/style.css"
+    ],
+```
+
+## Usage
+
+
+```ts
+  import { EditorForAngularModule } from '@wangeditor/editor-for-angular';
+```
+
+```html
     <div style="border-bottom: 1px solid #ccc" wang-toolbar [mode]="mode" [editor]="editorRef">
     </div>
     <div style="height: 400px; overflow-y: hidden" wang-editor [(ngModel)]="valueHtml"
@@ -13,8 +40,12 @@
       [defaultHtml]="valueHtml" (onCreated)="handleCreated($event)" (onFocus)="handleFocus($event)"
       (onBlur)="handleBlur($event)" (onChange)="handleChange($event)"
       (customPaste)="customPaste($event)" (onDestroyed)="handleDestroyed($event)"> </div>
+```
 
-    <!-- <wang-toolbar style="border-bottom: 1px solid #ccc" [mode]="mode" [editor]="editorRef">
+or
+
+```html
+    <wang-toolbar style="border-bottom: 1px solid #ccc" [mode]="mode" [editor]="editorRef">
     </wang-toolbar>
     <wang-editor style="height: 400px; overflow-y: hidden" [(ngModel)]="valueHtml"
       (ngModelChange)="handleValueChange($event)" [mode]="mode" [defaultConfig]="editorConfig"
@@ -22,11 +53,5 @@
       (onFocus)="handleFocus($event)" (onBlur)="handleBlur($event)"
       (onChange)="handleChange($event)" (customPaste)="customPaste($event)"
       (onDestroyed)="handleDestroyed($event)">
-    </wang-editor> -->
-
-  </div>
-  <div style="margin-top: 10px">
-    <textarea [(ngModel)]="valueHtml" readonly
-      style="width: 100%; height: 200px; outline: none"></textarea>
-  </div>
-</div>
+    </wang-editor>
+```

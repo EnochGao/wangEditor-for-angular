@@ -1,15 +1,47 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { createToolbar, DomEditor, IDomEditor, IToolbarConfig, Toolbar } from '@wangeditor/editor';
+import { Mode } from '../type';
 
-@Component({
-  selector: 'wang-toolbar',
-  templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.less']
+@Directive({
+  selector: 'wang-toolbar,[wang-toolbar]',
+  host: {
+    style: 'display:block'
+  }
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent implements OnChanges, OnDestroy {
 
-  constructor() { }
+  @Input() mode: Mode = 'default';
+  @Input() editor!: IDomEditor;
+  @Input() defaultConfig: Partial<IToolbarConfig> = {};
 
-  ngOnInit(): void {
+  toolbar!: Toolbar;
+
+  constructor(private toolbarRef: ElementRef) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes['editor'].isFirstChange()) {
+      this.initToolbar();
+    }
+  }
+
+  private initToolbar() {
+    if (!this.toolbarRef) return;
+    if (!this.editor) {
+      throw new Error('Not found instance of Editor when create <Toolbar/> component');
+    }
+    if (DomEditor.getToolbar(this.editor)) return; // 不重复创建
+    this.toolbar = createToolbar({
+      editor: this.editor,
+      selector: this.toolbarRef.nativeElement || '<div></div>',
+      mode: this.mode,
+      config: this.defaultConfig,
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.toolbar) {
+      this.toolbar.destroy();
+    }
   }
 
 }

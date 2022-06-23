@@ -1,27 +1,55 @@
-# WangEditorForAngular
+# wangEditor for angular component
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.0.
+[English documentation](./README-en.md)
 
-## Development server
+## 介绍
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+基于 [wangEditor](https://www.wangeditor.com/) 封装的开箱即用的 angular 组件
 
-## Code scaffolding
+## 安装
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```shell
+yarn add @wangeditor/editor
+yarn add @wangeditor/editor-for-angular@next
+```
 
-## Build
+## 样式引入
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+angular.json
 
-## Running unit tests
+```json
+    "styles": [
+      "src/styles.less",
+      "node_modules/@wangeditor/editor/dist/css/style.css"
+    ],
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## 使用
 
-## Running end-to-end tests
+```ts
+  import { EditorForAngularModule } from '@wangeditor/editor-for-angular';
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```html
+    <div style="border-bottom: 1px solid #ccc" wang-toolbar [mode]="mode" [editor]="editorRef">
+    </div>
+    <div style="height: 400px; overflow-y: hidden" wang-editor [(ngModel)]="valueHtml"
+      (ngModelChange)="handleValueChange($event)" [mode]="mode" [defaultConfig]="editorConfig"
+      [defaultHtml]="valueHtml" (onCreated)="handleCreated($event)" (onFocus)="handleFocus($event)"
+      (onBlur)="handleBlur($event)" (onChange)="handleChange($event)"
+      (customPaste)="customPaste($event)" (onDestroyed)="handleDestroyed($event)"> </div>
+```
 
-## Further help
+或者
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```html
+    <wang-toolbar style="border-bottom: 1px solid #ccc" [mode]="mode" [editor]="editorRef">
+    </wang-toolbar>
+    <wang-editor style="height: 400px; overflow-y: hidden" [(ngModel)]="valueHtml"
+      (ngModelChange)="handleValueChange($event)" [mode]="mode" [defaultConfig]="editorConfig"
+      [defaultHtml]="valueHtml" (onCreated)="handleCreated($event)"
+      (onFocus)="handleFocus($event)" (onBlur)="handleBlur($event)"
+      (onChange)="handleChange($event)" (customPaste)="customPaste($event)"
+      (onDestroyed)="handleDestroyed($event)">
+    </wang-editor>
+```

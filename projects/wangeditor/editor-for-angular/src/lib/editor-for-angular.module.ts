@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { EditorComponent } from './editor/editor.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 
-
-
 @NgModule({
   declarations: [
     EditorComponent,
