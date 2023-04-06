@@ -14,7 +14,9 @@ based on the [wangEditor 5](https://www.wangeditor.com/v5/for-frame.html#vue3)
 ```shell
 npm i @wangeditor/editor
 npm i wangeditor-for-angular
+```
 or:
+```shell
 yarn add @wangeditor/editor
 yarn add wangeditor-for-angular
 ```

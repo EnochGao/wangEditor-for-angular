@@ -1,19 +1,19 @@
 <div>
-  <button (click)="insertText()">insert text</button>
-  <button (click)="printHtml()">print html</button>
+  <button (click)="insertText()">插入文本</button>
+  <button (click)="printHtml()">打印html</button>
   <button (click)="disable()">
-    {{ disabled ? 'enable': 'disable'  }}
+    {{ disabled ? "enable" : "disable" }}
   </button>
 
-  <div [ngStyle]="{'border': '1px solid #ccc'}">
+  <div [ngStyle]="{ border: '1px solid #ccc' }">
     <div
-      [ngStyle]="{'border-bottom': '1px solid #ccc'}"
+      [ngStyle]="{ 'border-bottom': '1px solid #ccc' }"
       wang-toolbar
       [mode]="mode"
-      [editor]="editorRef">
-    </div>
+      [editor]="editorRef"
+    ></div>
     <div
-      [ngStyle]="{'height': '400px','overflow-y': 'hidden'}"
+      [ngStyle]="{ height: '400px', 'overflow-y': 'hidden' }"
       wang-editor
       [(ngModel)]="valueHtml"
       [mode]="mode"
@@ -25,33 +25,38 @@
       (onBlur)="handleBlur($event)"
       (onChange)="handleChange($event)"
       (customPaste)="customPaste($event)"
-      (onDestroyed)="handleDestroyed($event)">
+      (onDestroyed)="handleDestroyed($event)"
+    ></div>
+    空值按钮禁用：
+    <button [disabled]="form.invalid || !editor?.editor?.getText()">
+      按钮
+    </button>
+    {{ editor?.editor?.getText() | json }}
+
+    <div [formGroup]="form">
+      <wang-toolbar
+        [ngStyle]="{ 'border-bottom': '1px solid #ccc' }"
+        [mode]="mode"
+        [editor]="editor.editor"
+      >
+      </wang-toolbar>
+      <wang-editor
+        [ngStyle]="{ height: '400px', 'overflow-y': 'hidden' }"
+        #editor="wangEditor"
+        formControlName="editor"
+        [mode]="mode"
+        [defaultConfig]="editorConfig"
+      >
+      </wang-editor>
     </div>
-
-    <wang-toolbar
-      [ngStyle]="{'border-bottom': '1px solid #ccc'}"
-      [mode]="mode"
-      [editor]="editorRef">
-    </wang-toolbar>
-    <wang-editor
-      [ngStyle]="{'height': '400px','overflow-y': 'hidden'}"
-      [(ngModel)]="valueHtml"
-      [mode]="mode"
-      [defaultConfig]="editorConfig"
-      [defaultHtml]="valueHtml"
-      (ngModelChange)="handleValueChange($event)"
-      (onCreated)="handleCreated($event)"
-      (onFocus)="handleFocus($event)"
-      (onBlur)="handleBlur($event)"
-      (onChange)="handleChange($event)"
-      (customPaste)="customPaste($event)"
-      (onDestroyed)="handleDestroyed($event)">
-    </wang-editor>
-
   </div>
 
   <div style="margin-top: 10px">
-    <textarea [(ngModel)]="valueHtml" readonly
-      style="width: 100%; height: 200px; outline: none"></textarea>
+    <textarea
+      title="title"
+      [(ngModel)]="valueHtml"
+      readonly
+      style="width: 100%; height: 200px; outline: none"
+    ></textarea>
   </div>
 </div>

@@ -4,8 +4,8 @@
   "compilerOptions": {
     "paths": {
       "wangeditor-for-angular": [
-        "dist/wangeditor/editor-for-angular",
-        // "projects/wangeditor/editor-for-angular/src/public-api.ts",
+        // "dist/wangeditor/editor-for-angular",
+        "projects/wangeditor/editor-for-angular/src/public-api.ts",
       ]
     },
     "baseUrl": "./",

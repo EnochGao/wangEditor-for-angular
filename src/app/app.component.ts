@@ -1,13 +1,17 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IDomEditor } from '@wangeditor/editor';
 import { AlertType, Mode } from 'wangeditor-for-angular';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.less']
+  styleUrls: ['./app.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
+  form!: FormGroup;
+
   disabled = false;
   valueHtml = '<p>hello</p>';
   mode: Mode = 'default';
@@ -19,10 +23,14 @@ export class AppComponent {
 
   editorRef!: IDomEditor;
 
-  constructor() {
+  constructor(private fb: FormBuilder) {
     setTimeout(() => {
       this.valueHtml = '<p>模拟 Ajax 异步设置内容</p>';
     }, 2000);
+
+    this.form = this.fb.group({
+      editor: [null, [Validators.required]],
+    });
   }
 
   handleCreated(editor: IDomEditor) {
@@ -45,9 +53,9 @@ export class AppComponent {
     console.log('blur', editor);
   }
 
-  customAlert({ info, type }: { info: string, type: AlertType; }) {
+  customAlert({ info, type }: { info: string; type: AlertType }) {
     alert(`【自定义提示】${type} - ${info}`);
-  };
+  }
 
   handleDestroyed(editor: IDomEditor) {
     console.log('destroyed', editor);
@@ -56,12 +64,12 @@ export class AppComponent {
   insertText() {
     if (this.editorRef == null) return;
     this.editorRef.insertText('hello world');
-  };
+  }
 
   printHtml() {
     if (this.editorRef == null) return;
     console.log(this.editorRef.getHtml());
-  };
+  }
 
   disable() {
     if (this.editorRef == null) return;
@@ -71,7 +79,7 @@ export class AppComponent {
       this.editorRef.disable();
     }
     this.disabled = !this.disabled;
-  };
+  }
 
   customPaste({ editor, event, callback }: any) {
     console.log('ClipboardEvent 粘贴事件对象', event);
@@ -80,6 +88,5 @@ export class AppComponent {
     editor.insertText('xxx');
     callback(false); // 返回 false ，阻止默认粘贴行为
     // callback(true) // 返回 true ，继续默认的粘贴行为
-  };
-
+  }
 }

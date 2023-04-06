@@ -1,6 +1,23 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { createEditor, IDomEditor, IEditorConfig, SlateDescendant, SlateEditor, SlateTransforms } from '@wangeditor/editor';
+import {
+  createEditor,
+  IDomEditor,
+  IEditorConfig,
+  SlateDescendant,
+  SlateEditor,
+  SlateTransforms,
+} from '@wangeditor/editor';
 import { Mode } from '../type';
 
 @Directive({
@@ -9,14 +26,17 @@ import { Mode } from '../type';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => EditorComponent),
-      multi: true
+      multi: true,
     },
   ],
+  exportAs: 'wangEditor',
   host: {
-    style: 'display:block'
-  }
+    style: 'display:block',
+  },
 })
-export class EditorComponent implements AfterViewInit, ControlValueAccessor, OnDestroy {
+export class EditorComponent
+  implements AfterViewInit, ControlValueAccessor, OnDestroy
+{
   @Input() mode: Mode = 'default';
   @Input() defaultContent: SlateDescendant[] = [];
   @Input() defaultHtml: string = '';
@@ -33,11 +53,11 @@ export class EditorComponent implements AfterViewInit, ControlValueAccessor, OnD
   @Output() onChange = new EventEmitter();
 
   editor!: IDomEditor;
-  curValue: string = '';
+  currentValue: string = '';
 
-  private propagateChange = (_: any) => { };
+  private propagateChange = (_: any) => {};
 
-  constructor(private editorRef: ElementRef) { }
+  constructor(private editorRef: ElementRef, private cd: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
     const that = this;
@@ -59,9 +79,10 @@ export class EditorComponent implements AfterViewInit, ControlValueAccessor, OnD
         },
         onChange(editor) {
           const editorHtml = editor.getHtml();
-          that.curValue = editorHtml; // 记录当前内容
+          that.currentValue = editorHtml; // 记录当前内容
           that.onChange.emit(editor);
           that.propagateChange(editorHtml);
+          that.cd.markForCheck();
 
           if (that.defaultConfig.onChange) {
             const info = that.genErrorInfo('ngModelChange');
@@ -109,23 +130,21 @@ export class EditorComponent implements AfterViewInit, ControlValueAccessor, OnD
             throw new Error(info);
           }
           let res;
-          that.customPaste.emit(
-            {
-              editor,
-              event,
-              callback: (val: boolean) => {
-                res = val;
-              }
-            }
-          );
+          that.customPaste.emit({
+            editor,
+            event,
+            callback: (val: boolean) => {
+              res = val;
+            },
+          });
           return res;
         },
-      }
+      },
     });
   }
 
   writeValue(obj: any): void {
-    if (obj === this.curValue) return; // 和当前内容一样，则忽略
+    if (obj === this.currentValue) return; // 和当前内容一样，则忽略
     this.setHtml(obj);
   }
 
@@ -133,8 +152,7 @@ export class EditorComponent implements AfterViewInit, ControlValueAccessor, OnD
     this.propagateChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
-  }
+  registerOnTouched(fn: any): void {}
 
   setDisabledState?(isDisabled: boolean): void {
     if (isDisabled) {
@@ -142,7 +160,6 @@ export class EditorComponent implements AfterViewInit, ControlValueAccessor, OnD
     } else {
       this.editor.enable();
     }
-
   }
 
   ngOnDestroy(): void {
@@ -171,7 +188,9 @@ export class EditorComponent implements AfterViewInit, ControlValueAccessor, OnD
     editor.focus();
     editor.select([]);
     editor.deleteFragment();
-    SlateTransforms.setNodes(editor, { type: 'paragraph' } as any, { mode: 'highest' });
+    SlateTransforms.setNodes(editor, { type: 'paragraph' } as any, {
+      mode: 'highest',
+    });
     editor.dangerouslyInsertHtml(newHtml);
 
     // 恢复编辑器状态
@@ -191,5 +210,4 @@ export class EditorComponent implements AfterViewInit, ControlValueAccessor, OnD
       }
     }
   }
-
 }

@@ -4,6 +4,7 @@ import { Mode } from '../type';
 
 @Directive({
   selector: 'wang-toolbar,[wang-toolbar]',
+  exportAs: 'wangToolbar',
   host: {
     style: 'display:block'
   }
