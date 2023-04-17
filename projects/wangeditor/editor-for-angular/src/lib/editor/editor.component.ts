@@ -1,13 +1,14 @@
 import {
-  AfterViewInit,
   ChangeDetectorRef,
   Directive,
   ElementRef,
   EventEmitter,
   forwardRef,
   Input,
+  OnChanges,
   OnDestroy,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
@@ -35,7 +36,7 @@ import { Mode } from '../type';
   },
 })
 export class EditorComponent
-  implements AfterViewInit, ControlValueAccessor, OnDestroy
+  implements ControlValueAccessor, OnDestroy, OnChanges
 {
   @Input() mode: Mode = 'default';
   @Input() defaultContent: SlateDescendant[] = [];
@@ -59,7 +60,16 @@ export class EditorComponent
 
   constructor(private editorRef: ElementRef, private cd: ChangeDetectorRef) {}
 
-  ngAfterViewInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['defaultConfig']) {
+      if (this.editor) {
+        this.editor.destroy();
+      }
+      this.init();
+    }
+  }
+
+  private init() {
     const that = this;
 
     createEditor({
@@ -156,9 +166,9 @@ export class EditorComponent
 
   setDisabledState?(isDisabled: boolean): void {
     if (isDisabled) {
-      this.editor.disable();
+      this.editor?.disable();
     } else {
-      this.editor.enable();
+      this.editor?.enable();
     }
   }
 
