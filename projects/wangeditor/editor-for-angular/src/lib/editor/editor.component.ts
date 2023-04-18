@@ -7,6 +7,7 @@ import {
   Input,
   OnChanges,
   OnDestroy,
+  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -36,7 +37,7 @@ import { Mode } from '../type';
   },
 })
 export class EditorComponent
-  implements ControlValueAccessor, OnDestroy, OnChanges
+  implements OnInit, ControlValueAccessor, OnDestroy, OnChanges
 {
   @Input() mode: Mode = 'default';
   @Input() defaultContent: SlateDescendant[] = [];
@@ -60,16 +61,20 @@ export class EditorComponent
 
   constructor(private editorRef: ElementRef, private cd: ChangeDetectorRef) {}
 
+  ngOnInit(): void {
+    this.init();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['defaultConfig']) {
-      if (this.editor) {
-        this.editor.destroy();
-      }
+    if (changes['defaultConfig'] && !changes['defaultConfig'].isFirstChange()) {
       this.init();
     }
   }
 
   private init() {
+    if (this.editor) {
+      this.editor.destroy();
+    }
     const that = this;
 
     createEditor({
@@ -154,8 +159,10 @@ export class EditorComponent
   }
 
   writeValue(obj: any): void {
-    if (obj === this.currentValue) return; // 和当前内容一样，则忽略
-    this.setHtml(obj);
+    setTimeout(() => {
+      if (obj === this.currentValue) return; // 和当前内容一样，则忽略
+      this.setHtml(obj);
+    }, 0);
   }
 
   registerOnChange(fn: any): void {
@@ -165,11 +172,13 @@ export class EditorComponent
   registerOnTouched(fn: any): void {}
 
   setDisabledState?(isDisabled: boolean): void {
-    if (isDisabled) {
-      this.editor?.disable();
-    } else {
-      this.editor?.enable();
-    }
+    setTimeout(() => {
+      if (isDisabled) {
+        this.editor?.disable();
+      } else {
+        this.editor?.enable();
+      }
+    }, 0);
   }
 
   ngOnDestroy(): void {

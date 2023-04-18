@@ -51,6 +51,22 @@
     </div>
   </div>
 
+  <div>
+    <wang-toolbar
+      [ngStyle]="{ 'border-bottom': '1px solid #ccc' }"
+      [mode]="mode"
+      [editor]="editor1.editor"
+    >
+    </wang-toolbar>
+    <wang-editor
+      [ngStyle]="{ height: '400px', 'overflow-y': 'hidden' }"
+      [ngModel]="'<p>哈哈哈哈哈哈</p>'"
+      #editor1="wangEditor"
+      [mode]="mode"
+    >
+    </wang-editor>
+  </div>
+
   <div style="margin-top: 10px">
     <textarea
       title="title"

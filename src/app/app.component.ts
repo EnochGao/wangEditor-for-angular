@@ -16,6 +16,8 @@ export class AppComponent {
   valueHtml = '<p>hello</p>';
   mode: Mode = 'default';
 
+  default = '<p>哈哈哈哈哈哈</p>';
+
   // 编辑器相关配置
   editorConfig = {
     placeholder: '请输入内容...',
@@ -29,8 +31,12 @@ export class AppComponent {
     }, 2000);
 
     this.form = this.fb.group({
-      editor: [null, [Validators.required]],
+      editor: ['<p>222222222222222222</p>', [Validators.required]],
     });
+
+    // setTimeout(() => {
+    //   this.form.get('editor')?.patchValue('<p>测试测试</p>');
+    // }, 2000);
   }
 
   handleCreated(editor: IDomEditor) {
